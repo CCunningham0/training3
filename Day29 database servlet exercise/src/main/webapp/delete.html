@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Delete Employee</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div class="wrapper">
+		<h1>Employee Delete Form</h1>
+		<form action="delete" method="post">
+		<table>
+			<tr>
+				<td>Enter Name:</td>
+				<td><input type="text" name="user_name" placeholder="Name" required /></td>
+			</tr>
+			<tr>
+				<td>Enter Email:</td>
+				<td><input type="email" name="user_email" placeholder="Email" required /></td>
+			</tr>
+			<tr>
+				<td>Select Gender:</td>
+				<td>
+					<input type="radio" name="user_gender" value="male" required /> Male
+					<input type="radio" name="user_gender" value="female"/> Female
+				</td>
+			</tr>
+			<tr>
+				<td>Country:</td>
+				<td>
+					<select name="user_country" required>
+						<option value="USA">USA</option>
+						<option value="UK">UK</option>
+						<option value="UAE">UAE</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="Save"/>
+				 </td>
+			</tr>
+			<tr>
+				<td>
+					<a href="list.html" >View List</a>
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>		
+</body>
+</html>

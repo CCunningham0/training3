@@ -1,0 +1,7 @@
+@charset "ISO-8859-1";
+.wrapper{
+	width: 40%;
+	border: 1px solid #666;
+	margin: 0 auto;
+	padding: 20px;	
+}
