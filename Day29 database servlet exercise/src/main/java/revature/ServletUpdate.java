@@ -37,24 +37,27 @@ public class ServletUpdate extends HttpServlet {
 			e1.printStackTrace();
 		}
 		 
+		boolean flagEmpFound = false;
 		Employee listEmployee = new Employee();
 		for (Iterator<Employee> iter = employees.iterator(); iter.hasNext();) {
 				listEmployee = iter.next();
-				if (employee.getName().equals(listEmployee.getName()) && 
-						employee.getEmail().equals(listEmployee.getEmail())){
+				if (employee.getEmail().equals(listEmployee.getEmail())){
+					flagEmpFound = true;
 					 try {
-							employeeDao.updateEmployee(listEmployee);
-							out.println("<h1>Updated Employee!<h1>");
-						} catch (SQLException e) {
+						employee.setId(listEmployee.getId());
+						employeeDao.updateEmployee(employee);
+						out.println("<h1>Updated Employee!<h1>");
+					} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+					}
 					 break;
-				}
+				} 
 		}
 		 
-
-		 
+		if (!flagEmpFound) {
+			out.println("<h1>Employee not found.<h1>");
+		}
 		 out.println("<h2><a href=\"index.html\">Back</a></h2>");
 	}
 }

@@ -14,9 +14,7 @@ public class EmployeeDAOImpl implements IEmployeeDAO {
 	Connection conn = null;
 	
 	public EmployeeDAOImpl() {
-		System.out.println("Calling ConnectionFactory, conn is: " + this.conn);
 		this.conn = ConnectionFactory.getConnection();
-		System.out.println("conn is now: " + this.conn);
 	}
 
 	@Override
@@ -37,12 +35,16 @@ public class EmployeeDAOImpl implements IEmployeeDAO {
 
 	@Override
 	public void updateEmployee(Employee employee) throws SQLException {
-		String sql = "update employees where id = " + employee.getId();
+		String sql = "update employees set Name = ?, email = ?, gender = ?, country = ? where id = " + employee.getId();		
 		preparedStatement = conn.prepareStatement(sql);
+		preparedStatement.setString(1, employee.getName());
+		preparedStatement.setString(2, employee.getEmail());
+		preparedStatement.setString(3, employee.getGender());
+		preparedStatement.setString(4, employee.getCountry());	
 		int count = preparedStatement.executeUpdate();
 		
 		if (count > 0) // if getting 0, issue has occurred
-			System.out.println("Removed pending account!");
+			System.out.println("Updated employee!");
 		else
 			System.out.println("Sorry, an issue as occured.");
 	}
@@ -50,11 +52,12 @@ public class EmployeeDAOImpl implements IEmployeeDAO {
 	@Override
 	public void deleteEmployee(Employee employee) throws SQLException {
 		String sql = "delete from employees where id = " + employee.getId();
+		//System.out.println(employee.getId());
 		preparedStatement = conn.prepareStatement(sql);
 		int count = preparedStatement.executeUpdate();
 		
 		if (count > 0) // if getting 0, issue has occurred
-			System.out.println("Deleted employee!");
+			System.out.println("Deleted employee succesfully!");
 		else
 			System.out.println("Sorry, an issue as occured.");
 	}

@@ -3,6 +3,8 @@ package revature;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,27 +15,49 @@ public class ServletDelete extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
-		 // Get user input
-		 String name = request.getParameter("user_name");
-		 String email = request.getParameter("user_email");
-		 String gender = request.getParameter("user_gender");
-		 String country = request.getParameter("user_country");
+		// Get user input
+		String name = request.getParameter("user_name");
+		String email = request.getParameter("user_email");
+		String gender = request.getParameter("user_gender");
+		String country = request.getParameter("user_country");
 
-		 // Create new employee and set properties
-		 Employee employee = new Employee();
-		 IEmployeeDAO employeeDao = new EmployeeDAOImpl();
-		 employee.setName(name);
-		 employee.setEmail(email);
-		 employee.setGender(gender);
-		 employee.setCountry(country);
-		 
-		 try {
-			employeeDao.deleteEmployee(employee);
-		} catch (SQLException e) {
+		// Create new employee and set properties
+		Employee employee = new Employee();
+		IEmployeeDAO employeeDao = new EmployeeDAOImpl();
+		employee.setName(name);
+		employee.setEmail(email);
+		employee.setGender(gender);
+		employee.setCountry(country);
+
+		List<Employee> employees = null;
+		try {
+			employees = employeeDao.getEmployees();
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-		 out.println("<h1>Deleted Employee!<h1>");
-		 out.println("<h2><a href=\"index.html\">Back</a></h2>");
+
+		boolean flagEmpFound = false;
+		Employee listEmployee = new Employee();
+		for (Iterator<Employee> iter = employees.iterator(); iter.hasNext();) {
+			listEmployee = iter.next();
+			if (employee.getEmail().equals(listEmployee.getEmail())){
+				try {
+					flagEmpFound = true;
+					employee.setId(listEmployee.getId());
+					employeeDao.deleteEmployee(employee);
+					out.println("<h1>Deleted Employee!<h1>");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			}
+		}
+
+		if (!flagEmpFound)
+			out.println("<h1>Employee not found.<h1>");
+
+		out.println("<h2><a href=\"index.html\">Back</a></h2>");
 	}
 }
