@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+    <h1 id='mytext'>A Heading</h1>
+    <p><input type='text' name='' id='t1' placeholder="Color name"></p>
+    <button onclick="onButtonClicked()">Add Styling</button>
+
+    <script>
+        function onButtonClicked() {
+            var color = document.getElementById('t1').value;
+            document.getElementById('mytext').style.fontSize = '50px';
+            document.getElementById('mytext').style.color = color;
+        }
+    </script>
+</body>
+</html>
